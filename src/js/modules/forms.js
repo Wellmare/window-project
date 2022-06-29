@@ -1,13 +1,15 @@
 import checkNumInputs from "./checkNumInputs";
 
-const forms = () => {
+const forms = (state) => {
     const forms = document.querySelectorAll('form')
-    const inputs = document.querySelectorAll('form input')
+
 
     checkNumInputs('input[name="user_phone"]')
+    checkNumInputs('.num-input')
+
 
     const messages = {
-        loading: 'Загрузка...', success: 'Форма отправлена', failure: 'Что-то пошло не так...'
+        loading: 'Загрузка...', success: 'Спасибо! Мы с вами скоро свяжемся', failure: 'Что-то пошло не так...'
     }
     const postData = async (url, data) => {
         document.querySelector('.status').textContent = messages.loading
@@ -18,7 +20,12 @@ const forms = () => {
         })
         return await res.text()
     }
-    const clearInputs = () => inputs.forEach(input => input.value = '')
+    const clearInputs = () => {
+        const inputs = document.querySelectorAll('input')
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]')
+        inputs.forEach(input => input.value = '')
+        checkboxes.forEach(item => item.checked = false)
+    }
 
 
     forms.forEach(form => {
@@ -30,10 +37,14 @@ const forms = () => {
             form.append(statusMessage)
 
             const formData = new FormData(form)
+            if (form.getAttribute('data-calc') === 'end') {
+                Object.entries(state).forEach(item => {
+                    formData.append(item[0], item[1])
+                })
+            }
 
             postData('assets/server.php', formData)
                 .then(result => {
-                    console.log(result)
                     statusMessage.textContent = messages.success
                 })
                 .catch(() => {
@@ -41,8 +52,13 @@ const forms = () => {
                 })
                 .finally(() => {
                     clearInputs()
-                    setTimeout(()=>{
+                    state = {
+                        form: 0, type: 'tree'
+                    }
+                    setTimeout(() => {
                         statusMessage.remove()
+                        document.querySelectorAll('[data-modal]').forEach(item => item.style.display = 'none')
+                        document.body.style.overflow = 'scroll';
                     }, 3000)
                 })
         })

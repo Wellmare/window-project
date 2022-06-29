@@ -1,9 +1,23 @@
+import validate from "./validation";
+
 const modals = () => {
-    function bindModal(triggersSelector, modalSelector, closeSelector, closeClickOverlay = true) {
+    function bindModal(triggersSelector, modalSelector, closeSelector, dependentInputsSelectors, closeClickOverlay = true) {
         const triggers = document.querySelectorAll(triggersSelector)
         const modal = document.querySelector(modalSelector)
         const close = document.querySelector(closeSelector)
         const windows = document.querySelectorAll('[data-modal]')
+
+        let dependentInputs
+        if (dependentInputsSelectors) {
+            if (Array.isArray(dependentInputsSelectors)) {
+                dependentInputs = dependentInputsSelectors.map(item => {
+                    const items = document.querySelectorAll(item)
+                    return items.length === 1 ? items[0] : items
+                })
+            } else {
+                dependentInputs = document.querySelectorAll(dependentInputsSelectors)
+            }
+        }
 
         close.addEventListener('click', () => {
             windows.forEach(item => item.style.display = 'none')
@@ -17,7 +31,7 @@ const modals = () => {
         })
         triggers.forEach(trigger => {
             trigger.addEventListener('click', (e) => {
-                if (e.target) {
+                if (e.target && !dependentInputsSelectors || validate(dependentInputs)) {
                     e.preventDefault();
 
                     windows.forEach(item => item.style.display = 'none')
@@ -48,8 +62,8 @@ const modals = () => {
     bindModal('.popup_engineer_btn', '.popup_engineer', '.popup_engineer .popup_close')
     bindModal('.phone_link', '.popup', '.popup .popup_close')
     bindModal('.popup_calc_btn', '.popup_calc', '.popup_calc_close')
-    bindModal('.popup_calc_button', '.popup_calc_profile', '.popup_calc_profile_close', false)
-    bindModal('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', false)
+    bindModal('.popup_calc_button', '.popup_calc_profile', '.popup_calc_profile_close', ['#width', '#height'], false)
+    bindModal('.popup_calc_profile_button', '.popup_calc_end', '.popup_calc_end_close', '.checkbox-type', false)
     // showModalByTime('.popup', 60000)
 }
 

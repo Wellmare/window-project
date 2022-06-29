@@ -1,4 +1,4 @@
-import checkNumInputs from "./checkNumInputs";
+// import checkNumInputs from "./checkNumInputs";
 
 const changeModalState = (state) => {
     const windowForm = document.querySelectorAll('.balcon_icons_img')
@@ -7,25 +7,35 @@ const changeModalState = (state) => {
     const windowType = document.querySelectorAll('#view_type')
     const windowProfile = document.querySelectorAll('.checkbox')
 
-    checkNumInputs('.num-input')
+
+    function bindActionToElems(event, elems, prop) {
+        elems.forEach((item, i) => {
+            item.addEventListener(event, () => {
+                switch (item.nodeName) {
+                    case 'SPAN':
+                        state[prop] = i
+                        break
+                    case 'INPUT':
+                        if (item.getAttribute('type') === 'checkbox') {
+                            state[prop] = i === 0 ? 'Холодное' : 'Теплое'
+                            elems.forEach((checkbox) => checkbox.checked = false)
+                            elems[i].checked = true
+                        } else {
+                            state[prop] = item.value
+                        }
+                        break
+                    case 'SELECT':
+                        state[prop] = item.value
+                        break
+                }
+            })
+        })
+    }
 
     bindActionToElems('click', windowForm, 'form')
     bindActionToElems('input', windowWidth, 'width')
     bindActionToElems('input', windowHeight, 'height')
     bindActionToElems('change', windowType, 'type')
     bindActionToElems('change', windowProfile, 'profile')
-
-    function bindActionToElems(event, elem, prop) {
-        elem.forEach((item, i) => {
-            item.addEventListener(event, (e) => {
-                if (elem.length === 1) {
-                    state[prop] = e.target.value
-                } else {
-                    state[prop] = i
-                }
-                console.log(state)
-            })
-        })
-    }
 }
 export default changeModalState
