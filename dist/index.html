@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/favicon.ico">
+<!--    <link rel="icon" href="/favicon.ico">-->
     <title>Ирвас окна</title>
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <!-- Fonts -->
@@ -751,19 +751,19 @@
                     <p><h4>ДО ЗАВЕРШЕНИЯ АКЦИИ:</h4></p>
                     <div class="container1">
                         <div class="numbers1">
-                            <div><span id="days">08</span></div>
+                            <div><span id="days">00</span></div>
                             <div class="description1">Дней</div>
                         </div>
                         <div class="numbers1">
-                            <div><span id="hours">18</span></div>
+                            <div><span id="hours">00</span></div>
                             <div class="description1">Часов</div>
                         </div>
                         <div class="numbers1">
-                            <div><span id="minutes">33</span></div>
+                            <div><span id="minutes">00</span></div>
                             <div class="description1">Минут</div>
                         </div>
                         <div class="numbers1">
-                            <div><span id="seconds">44</span></div>
+                            <div><span id="seconds">00</span></div>
                             <div class="description1">Секунд</div>
                         </div>
                     </div>
@@ -852,7 +852,7 @@
 
 <!-- Modals -->
 <!-- Request a call -->
-<div class="popup">
+<div class="popup" data-modal>
     <div class="popup_dialog">
         <div class="popup_content text-center">
             <button type="button" class="popup_close"><strong>&times;</strong></button>
@@ -872,7 +872,7 @@
 </div>
 
 <!-- Request an engineer -->
-<div class="popup_engineer">
+<div class="popup_engineer" data-modal>
     <div class="popup_dialog">
         <div class="popup_content text-center">
             <button type="button" class="popup_close"><strong>&times;</strong></button>
@@ -893,7 +893,7 @@
 </div>
 
 <!-- Calculator -->
-<div class="popup_calc">
+<div class="popup_calc" data-modal>
     <div class="popup_dialog">
         <div class="popup_calc_content text-center">
             <button type="button" class="popup_calc_close"><strong>&times;</strong></button>
@@ -915,17 +915,17 @@
                 <img src="assets/img/modal_calc/balkon/type3.png" alt="Тип3">
                 <img src="assets/img/modal_calc/balkon/type4.png" alt="Тип4">
             </div>
-            <input class="form-control" id="width" type="text" placeholder="Ширина" required>
+            <input class="form-control num-input" id="width" type="text" placeholder="Ширина" required>
             <label for="width">мм</label>
             <div class="multiplication"><strong>&times;</strong></div>
-            <input class="form-control" id="height" type="text" placeholder="Высота" required>
+            <input class="form-control num-input" id="height" type="text" placeholder="Высота" required>
             <label for="height">мм</label>
             <button class="button popup_calc_button">Далее</button>
         </div>
     </div>
 </div>
 
-<div class="popup_calc_profile">
+<div class="popup_calc_profile" data-modal>
     <div class="popup_dialog">
         <div class="popup_calc_profile_content text-center">
             <button type="button" class="popup_calc_profile_close"><strong>&times;</strong></button>
@@ -940,13 +940,13 @@
             </select>
             <img src="assets/img/modal_calc/icon_cold.png" alt="">
             <label>
-                <input class="checkbox" type="checkbox" name="checkbox-test">
+                <input class="checkbox checkbox-type" type="checkbox" name="checkbox-test">
                 <span class="checkbox-custom" id="cold"></span>
                 <span class="label">Холодное</span>
             </label>
             <img src="assets/img/modal_calc/icon_warm.png" alt="">
             <label>
-                <input class="checkbox" type="checkbox" name="checkbox-test">
+                <input class="checkbox checkbox-type" type="checkbox" name="checkbox-test">
                 <span class="checkbox-custom" id="warm"></span>
                 <span class="label">Теплое</span>
             </label>
@@ -956,12 +956,12 @@
     </div>
 </div>
 
-<div class="popup_calc_end">
+<div class="popup_calc_end" data-modal>
     <div class="popup_dialog">
         <div class="popup_content text-center">
             <button type="button" class="popup_calc_end_close"><strong>&times;</strong></button>
             <div class="popup_form">
-                <form class="form" action="#">
+                <form class="form" action="#" data-calc="end">
                     <h2>Спасибо за обращение! <br>Оставьте свои данные</h2>
                     <input class="form-control form_input" name="user_name" required type="text"
                            placeholder="Введите ваше имя">
